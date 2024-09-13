@@ -76,7 +76,7 @@ def main():
     # 获取最新优选IP
     ip_addresses_str = get_cf_speed_test_ip()
     ip_addresses = ip_addresses_str.split(',')
-    delete_and_push_dns_records(ip_addresses)
+    delete_and_push_dns_records(ip_addresses[0])
 
 if __name__ == '__main__':
     main()
