@@ -29,7 +29,6 @@ def get_cf_speed_test_ip(timeout=10, max_retries=5):
     return None
 
 def delete_and_push_dns_records(ips):
-    push_plus_content = []
     url = f"https://api.cloudflare.com/client/v4/zones/{CF_ZONE_ID}/dns_records?name={CF_DNS_NAME}"
     try:
         response = requests.get(url, headers=headers)
@@ -55,10 +54,8 @@ def delete_and_push_dns_records(ips):
             response = requests.post(url, headers=headers, json=data)
             if response.status_code == 200:
                 print(f"cf_dns_change success: ---- Time: " + str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + " ---- ip：" + str(ip))
-                push_plus_content.append("ip:" + str(ip) + f"解析{CF_DNS_NAME}成功")
             else:
                 print(f"cf_dns_change ERROR: ---- Time: " + str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + " ---- MESSAGE: " + str(response.text))
-                push_plus_content.append( "ip:" + str(ip) + f"解析{CF_DNS_NAME}失败")
         except requests.RequestException:
             pass  # 忽略错误
 
